@@ -53,18 +53,18 @@ class git_repo_manager:
 
       # CMakeLists.txt update
       cmake_lines = []
-      cmake_lists_fp = self.repo_dir_+"/een/CMakeLists.txt"
+      cmake_lists_fp = self.repo_dir_+"/CMakeLists.txt"
       with open(cmake_lists_fp, 'r') as file:
         cmake_lines = file.readlines()
       for i in range(len(cmake_lines)):
         if "set(EEN_VERSION_MAJOR" in cmake_lines[i]:
-          cmake_lines[i] = f"set(EEN_VERSION_MAJOR       \"{version_maj}\")\n"
+          cmake_lines[i] = f"set(EEN_VERSION_MAJOR \"{version_maj}\")\n"
           print("updated version_maj...")
         if "set(EEN_VERSION_MINOR" in cmake_lines[i]:
-          cmake_lines[i] = f"set(EEN_VERSION_MINOR       \"{version_min}\")\n"
+          cmake_lines[i] = f"set(EEN_VERSION_MINOR \"{version_min}\")\n"
           print("updated version_min...")
         if "set(EEN_VERSION_PATCH" in cmake_lines[i]:
-          cmake_lines[i] = f"set(EEN_VERSION_PATCH       \"{version_patch}\")\n"
+          cmake_lines[i] = f"set(EEN_VERSION_PATCH \"{version_patch}\")\n"
           print("updated version_patch...")
       with open(cmake_lists_fp, 'w') as file:
         file.writelines(cmake_lines)
@@ -128,7 +128,7 @@ def main():
 
     tag_name = sys.argv[1]
 
-    git_ = git_repo_manager(f"{sys.path[0]}/..",tag_name)
+    git_ = git_repo_manager(f"{sys.path[0]}",tag_name)
     if not no_git_ and git_.is_safe():
       if git_.update_tags_in_source(tag_name):
         git_.commit(f"tag instances updated to {tag_name}")
