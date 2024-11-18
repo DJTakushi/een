@@ -14,7 +14,9 @@ set(EEN_VERSION_PATCH "21")
 set(EEN_VERSION
     "${EEN_VERSION_MAJOR}.${EEN_VERSION_MINOR}.${EEN_VERSION_PATCH}")
 set(EEN_NAME_VERSION
-    "${EEN_PROJECT_NAME} v${EEN_VERSION} (${EEN_VERSION_REVISION})")
+    "${EEN_PROJECT_NAME} v${EEN_VERSION}")
+
+add_compile_definitions(APP_VERSION="${EEN_NAME_VERSION}")
 
 ################################################################################
 ### DECLARE PROJECT
