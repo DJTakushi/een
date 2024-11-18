@@ -1,16 +1,12 @@
-################################################################################
-### SPARKPLUG B DEMO EEN MAIN
-################################################################################
-
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.28.3)
 
 ################################################################################
 ### PROJECT DESCRIPTION AND META INFO
 ################################################################################
 
-set(EEN_PROJECT_NAME        "sparkplugb_demo_een")
-set(EEN_PROJECT_DESCRIPTION "SparkPlugB Demo Embedded Edge Node")
-set(EEN_AUTHOR_DOMAIN       "https://github.com/DJTakushi/spbd")
+set(EEN_PROJECT_NAME        "een")
+set(EEN_PROJECT_DESCRIPTION "Embedded Edge Node")
+set(EEN_AUTHOR_DOMAIN       "https://github.com/DJTakushi/een")
 set(EEN_VERSION_MAJOR       "0")
 set(EEN_VERSION_MINOR       "1")
 set(EEN_VERSION_PATCH       "20")
