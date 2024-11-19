@@ -7,7 +7,12 @@ een::een(std::string config){
                                             topic_ndata_,
                                             topic_ncmd_,
                                             topic_dcmd_};
-  mosq_client_ = std::make_shared<mosquitto_client>("localhost",
+  char host[40] = "localhost";
+  char* mq_host = std::getenv("MQ_HOST");
+  if (mq_host != NULL){
+    strcpy(host,mq_host);
+  }
+  mosq_client_ = std::make_shared<mosquitto_client>(mq_host,
                                                     1883,
                                                     60,
                                                     subscriptions_,
