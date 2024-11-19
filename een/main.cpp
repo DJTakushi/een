@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
   std::shared_ptr<een> een_ = std::make_shared<een>("");
 
   std::cout << time_rfc_3339() << " : starting service routine.."<<std::endl;
+  een_->start_loop();
   while(een_->is_stable()){
     een_->service_mqtt();
     // een_->service_iot_hub();
