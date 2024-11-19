@@ -60,6 +60,20 @@ void een::ndata__send(){
 void een::rec_local_data_msg(std::string& msg){
   /** TODO :  */
 }
+void een::start_loop(){
+  is_active_=true;
+  een_work_thread_ = std::thread([this](){
+    while(this->is_active_){
+      std::unique_lock lk(this->connection_->mutex);
+      this->connection_->cv.wait(lk, [this] { return this->connection_->message_available(); });
+
+      std::string msg = this->connection_->get_received_message();
+      rec_local_config_msg(msg);
+
+
+    }
+  });
+}
 void een::rec_local_config_msg(std::string& msg){
   try {
     nlohmann::json j = nlohmann::json::parse(msg);

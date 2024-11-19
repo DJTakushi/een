@@ -1,4 +1,5 @@
 #include <string>
+#include <thread>
 
 // #define USE_EDGE_MODULES
 // #include "azureiot/iothub_module_client_ll.h"
@@ -52,6 +53,8 @@ class een{
   //                                         void* userContextCallback);
 
   void set_topics();
+  std::thread een_work_thread_;
+  bool is_active_{false};
 
  public:
   een(std::string config);
@@ -68,5 +71,6 @@ class een{
 
   bool is_stable();
   void service_mqtt();
+  void start_loop();
   // void service_iot_hub();
 };
