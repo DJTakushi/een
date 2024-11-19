@@ -90,6 +90,14 @@ WORKDIR /
 RUN git clone https://github.com/nlohmann/json.git --branch v3.11.3
 RUN cp -r /json/include/* /usr/include/
 
+# embedded common
+WORKDIR /
+RUN git clone https://github.com/DJTakushi/embedded_common.git
+RUN mkdir -p /embedded_common/build
+WORKDIR /embedded_common/build
+RUN git checkout a38b508c781d57bcac587cb6b333af18ef9a324a
+RUN cmake .. && make install
+
 # een build
 ADD . /een/
 RUN rm -r /een/build/*
