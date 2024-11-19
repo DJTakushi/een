@@ -23,32 +23,16 @@ void device_client::dbirth_send(struct mosquitto* m){
 void device_client::ddeath_send(struct mosquitto* m){
   // TODO :
 }
-void device_client::ddata_send(struct mosquitto* m){
-  org_eclipse_tahu_protobuf_Payload ddata_payload;
-  get_next_payload(&ddata_payload);
+org_eclipse_tahu_protobuf_Payload* device_client::get_ddata(){
+  org_eclipse_tahu_protobuf_Payload* ddata_payload = new org_eclipse_tahu_protobuf_Payload;
+  get_next_payload(ddata_payload);
 
   attribute_host_.ddata_gen(ddata_payload);
-  if(ddata_payload.metrics_count > 0){
-    size_t buffer_length = 1024;
-    uint8_t *binary_buffer = (uint8_t *)malloc(buffer_length * sizeof(uint8_t));
-    size_t message_length = encode_payload(binary_buffer,
-                                            buffer_length,
-                                            &ddata_payload);
-
-    mosquitto_publish(m,
-                      NULL,
-                      topic_ddata_.c_str(),
-                      message_length,
-                      binary_buffer,
-                      0,
-                      false);
-
-    free(binary_buffer);
+  if(ddata_payload->metrics_count <= 0){
+    delete ddata_payload;
+    ddata_payload = NULL;
   }
-  else{
-    std::cout << "no payloadto send" <<  std::endl;
-  }
-  free_payload(&ddata_payload);
+  return ddata_payload;
 }
 void device_client::dcmd_pass(std::string command){
   // TODO :
@@ -60,4 +44,7 @@ void device_client::update(nlohmann::json& j){
   else{
     std::cout << "attributes section not found in msg :"<< j.dump()<<std::endl;
   }
+}
+std::string device_client::get_topic_ddata_(){
+  return topic_ddata_;
 }
