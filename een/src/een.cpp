@@ -30,11 +30,7 @@ void een::setup_mosquitto(){
 
   mosquitto_lib_init();
   mosq_ = mosquitto_new(NULL, true, this);
-  if (!mosq_) {
-    std::cerr << "Error creating mosquitto handler"<<std::endl;
-    stable_ = false;
-  }
-  else{
+  if (mosq_) {
     mosquitto_log_callback_set(mosq_, een::log_callback);
     mosquitto_subscribe_callback_set(mosq_, een::subscribe_callback);
     mosquitto_connect_callback_set(mosq_, een::connect_callback);
@@ -52,6 +48,11 @@ void een::setup_mosquitto(){
       std::cerr << "Unable to connect."<<std::endl;
       stable_ = false;
     }
+  }
+  else{
+    std::cerr << "Error creating mosquitto handler"<<std::endl;
+    stable_ = false;
+
   }
 }
 void een::connect_callback(struct mosquitto *mosq,void *userdata,int result) {
