@@ -14,11 +14,13 @@ target_include_directories(een PRIVATE
   "."
   "include"
   "../attributes/include"
+  "/usr/local/include/mosquitto_client"
 )
 target_compile_features(${TARGET} PUBLIC cxx_std_17)
 
 target_link_libraries(${TARGET}
   libtahu.a
+  libmosquitto_client.a
   libmosquitto.so
   libiothub_client.a
   libiothub_client_mqtt_transport.a
