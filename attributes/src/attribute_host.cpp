@@ -44,7 +44,7 @@ void attribute_host::update_attributes_from_array(nlohmann::json& j){
     std::cout << "json not an array : " << j.dump()<<std::endl;
   }
 }
-void attribute_host::ddata_gen(org_eclipse_tahu_protobuf_Payload& payload){
+void attribute_host::ddata_gen(org_eclipse_tahu_protobuf_Payload* payload){
   for(auto attr : attributes_){
     if(attr.second->is_recently_published()){
       size_t attr_size;
@@ -60,7 +60,7 @@ void attribute_host::ddata_gen(org_eclipse_tahu_protobuf_Payload& payload){
           break;
       }
 
-      add_simple_metric(&payload,
+      add_simple_metric(payload,
                         attr.first.c_str(),
                         true,
                         0, // alias; should maybe be removed

@@ -15,5 +15,5 @@ class attribute_host{
   std::mutex attribute_mutex;
   void update_attribute(nlohmann::json& j, steady_tp time);
   void update_attributes_from_array(nlohmann::json& j);
-  void ddata_gen(org_eclipse_tahu_protobuf_Payload& payload);
+  void ddata_gen(org_eclipse_tahu_protobuf_Payload* payload);
 };
