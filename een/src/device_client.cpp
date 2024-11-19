@@ -17,11 +17,15 @@ void device_client::set_topics(){
   topic_ddata_ += edge_node_id_+"/"+device_id_;
 }
 
-void device_client::dbirth_send(struct mosquitto* m){
+org_eclipse_tahu_protobuf_Payload* device_client::get_dbirth(){
   // TODO :
+  org_eclipse_tahu_protobuf_Payload* dbirth_payload;
+  return dbirth_payload;
 }
-void device_client::ddeath_send(struct mosquitto* m){
+org_eclipse_tahu_protobuf_Payload* device_client::get_ddeath(){
   // TODO :
+  org_eclipse_tahu_protobuf_Payload* ddeath_payload;
+  return ddeath_payload;
 }
 org_eclipse_tahu_protobuf_Payload* device_client::get_ddata(){
   org_eclipse_tahu_protobuf_Payload* ddata_payload = new org_eclipse_tahu_protobuf_Payload;
