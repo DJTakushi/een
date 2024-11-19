@@ -2,7 +2,17 @@
 #include "een.h"
 een::een(std::string config){
   set_topics();
-  setup_mosquitto();
+  std::list<std::string> subscriptions_ = {topic_nbirth_,
+                                            topic_ndeath_,
+                                            topic_ndata_,
+                                            topic_ncmd_,
+                                            topic_dcmd_};
+  mosq_client_ = std::make_shared<mosquitto_client>("localhost",
+                                                    1883,
+                                                    60,
+                                                    subscriptions_,
+                                                    topic_ndeath_);
+  stable_ &= mosq_client_->is_stable();
   setup_iot_hub();
 
   /** TODO : connect to all device modules and poplulate device_map_ */
@@ -19,77 +29,6 @@ void een::set_topics(){
   topic_ndata_ = topic_base + "/NDATA/" + edge_node_id_;
   topic_ncmd_ = topic_base + "/NCMD/" + edge_node_id_+"/#";
   topic_dcmd_ = topic_base + "/DCMD/" + edge_node_id_+"/#";
-}
-
-void een::setup_mosquitto(){
-  char* mqtt_host_name_env = std::getenv("MQ_HOST");
-  if (mqtt_host_name_env != NULL){
-    mqtt_host_name_ = std::string(mqtt_host_name_env);
-  }
-  std::cout << "host_compose : " << std::string(mqtt_host_name_) << std::endl;
-
-  mosquitto_lib_init();
-  mosq_ = mosquitto_new(NULL, true, this);
-  if (mosq_) {
-    mosquitto_log_callback_set(mosq_, een::log_callback);
-    mosquitto_subscribe_callback_set(mosq_, een::subscribe_callback);
-    mosquitto_connect_callback_set(mosq_, een::connect_callback);
-    mosquitto_message_callback_set(mosq_, een::message_callback);
-    mosquitto_username_pw_set(mosq_, "admin", "changeme");
-    mosquitto_will_set(mosq_, topic_ndeath_.c_str(), 0, NULL, 0, false);
-
-    if (mosquitto_connect(mosq_,
-                          mqtt_host_name_.c_str(),
-                          mqtt_host_port_,
-                          mqtt_host_keepalive_) == 0) {
-      std::cout << "mosquitto connection established" <<std::endl;
-    }
-    else{
-      std::cerr << "Unable to connect."<<std::endl;
-      stable_ = false;
-    }
-  }
-  else{
-    std::cerr << "Error creating mosquitto handler"<<std::endl;
-    stable_ = false;
-
-  }
-}
-void een::connect_callback(struct mosquitto *mosq,void *userdata,int result) {
-  een* this_een_ = (een*)userdata;
-  if (!result) {
-    // Subscribe to commands
-    mosquitto_subscribe(mosq, NULL, this_een_->topic_ncmd_.c_str(), 0);
-    mosquitto_subscribe(mosq, NULL, this_een_->topic_dcmd_.c_str(), 0);
-  } else {
-    std::cerr << "MQTT Connect failed : code " << result << std::endl;
-  }
-}
-void een::subscribe_callback(struct mosquitto *mosq,
-                              void *userdata,
-                              int mid,
-                              int qos_count,
-                              const int *granted_qos){
-  std::cout << "subscribed (mid: "<< mid << "): "<< granted_qos[0];;
-  for (int i = 1; i < qos_count; i++) {
-    std::cout << ", " << granted_qos[i];
-  }
-  std::cout << std::endl;
-}
-void een::log_callback(struct mosquitto *mosq,
-                        void *userdata,
-                        int level,
-                        const char *str) {
-  // Print all log messages regardless of level.
-  een* een_ = (een*)(userdata);
-  if(een_->log_mosquitto_){
-    std::cout << str <<  std::endl;
-  }
-}
-void een::message_callback(struct mosquitto *mosq,
-                                  void *userdata,
-                                  const struct mosquitto_message *message){
-  /* TODO: implement functionality like tahu/c/examples/udt_example/example.c */
 }
 
 void een::nbirth_send(){
@@ -132,7 +71,24 @@ void een::rec_local_config_msg(std::string& msg){
         std::cout<< "device_client created : "<< name<<std::endl;
       }
       device_map_[name]->update(j);
-      device_map_[name]->ddata_send(mosq_);
+      org_eclipse_tahu_protobuf_Payload* payload = device_map_[name]->get_ddata();
+      if(payload != NULL){
+        size_t buffer_length = 1024;
+        uint8_t *binary_buffer = (uint8_t *)malloc(buffer_length * sizeof(uint8_t));
+        size_t message_length = encode_payload(binary_buffer,
+                                                buffer_length,
+                                                payload);
+
+        mosq_client_->publish(NULL,
+                              device_map_[name]->get_topic_ddata_().c_str(),
+                              message_length,
+                              binary_buffer,
+                              0,
+                              false);
+
+        free(binary_buffer);
+        delete payload;
+      }
     }
     else{
       std::cout << "'name' missing from message : " << msg << std::endl;
@@ -306,7 +262,7 @@ bool een::is_stable(){
 }
 
 void een::service_mqtt(){
-  mosquitto_loop(mosq_, 0, 1);
+  mosq_client_->service_mqtt();
 }
 void een::service_iot_hub(){
   IoTHubModuleClient_LL_DoWork(iot_handle_);
