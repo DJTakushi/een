@@ -2,10 +2,7 @@
 #include "een.h"
 een::een(std::string config){
   set_topics();
-  std::list<std::string> subscriptions_ = {topic_nbirth_,
-                                            topic_ndeath_,
-                                            topic_ndata_,
-                                            topic_ncmd_,
+  std::list<std::string> subscriptions_ = { topic_ncmd_,
                                             topic_dcmd_};
   char host[40] = "localhost";
   char* mq_host = std::getenv("MQ_HOST");
