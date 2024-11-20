@@ -28,8 +28,6 @@ int main(int argc, char* argv[]) {
 
   std::cout << time_rfc_3339() << " : starting service routine.."<<std::endl;
   while(een_->is_stable()){
-    een_->service_mqtt();
-    // een_->service_iot_hub();
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
   std::cout << "exiting main.  goodbye."<<std::endl;
