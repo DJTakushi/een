@@ -123,6 +123,10 @@ void een::rec_local_config_msg(std::string& msg){
   }
 }
 
+void een::service_mqtt(){
+  mosq_client_->service_mqtt();
+}
+
 bool een::is_stable(){
   return stable_;
 }
