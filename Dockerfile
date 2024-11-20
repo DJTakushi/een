@@ -95,7 +95,7 @@ WORKDIR /
 RUN git clone https://github.com/DJTakushi/embedded_common.git
 RUN mkdir -p /embedded_common/build
 WORKDIR /embedded_common/build
-ARG EMBEDDED_COMMON_CHECKOUT=9b9d6a8ff3cad215dfd79e0e88e9065cba0c8f8b
+ARG EMBEDDED_COMMON_CHECKOUT=b00449da4ca146f8c977efe5f15d63678a0d8344
 RUN git fetch -a -p
 RUN git checkout ${EMBEDDED_COMMON_CHECKOUT}
 RUN cmake .. && make install
