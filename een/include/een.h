@@ -48,6 +48,5 @@ class een{
   void ndata__send();
 
   bool is_stable();
-  void service_mqtt();
   void process_local_message_loop_start();
 };
