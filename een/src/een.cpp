@@ -10,12 +10,12 @@ een::een(std::string config){
   if (mq_host != NULL){
     strcpy(host,mq_host);
   }
-  mosq_client_ = std::make_shared<mosquitto_client>(mq_host,
-                                                    1883,
-                                                    60,
-                                                    subscriptions_,
-                                                    topic_ndeath_);
-  stable_ &= mosq_client_->is_stable();
+  spb_mosq_client_ = std::make_shared<mosquitto_client>(mq_host,
+                                                        1883,
+                                                        60,
+                                                        subscriptions_,
+                                                        topic_ndeath_);
+  stable_ &= spb_mosq_client_->is_stable();
   local_conn_ = connection_factory::create(kAzureIot);
   process_local_message_loop_start();
 
@@ -104,12 +104,12 @@ void een::rec_local_config_msg(std::string& msg){
                                                 buffer_length,
                                                 payload);
 
-        mosq_client_->publish(NULL,
-                              device_map_[name]->get_topic_ddata_().c_str(),
-                              message_length,
-                              binary_buffer,
-                              0,
-                              false);
+        spb_mosq_client_->publish(NULL,
+                                  device_map_[name]->get_topic_ddata_().c_str(),
+                                  message_length,
+                                  binary_buffer,
+                                  0,
+                                  false);
 
         free(binary_buffer);
         delete payload;

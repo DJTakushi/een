@@ -10,7 +10,7 @@ class een{
   bool stable_{true}; // will be flagged false if problems detected
   std::string group_id_{"Sparkplug B Devices"};
   std::string edge_node_id_{"C Edge Node 1"};
-  std::shared_ptr<mosquitto_client> mosq_client_;
+  std::shared_ptr<mosquitto_client> spb_mosq_client_;
   std::string mqtt_host_name_{"localhost"};
   uint mqtt_host_port_{1883};
   uint mqtt_host_keepalive_{60};
