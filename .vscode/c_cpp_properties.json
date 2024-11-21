@@ -9,8 +9,7 @@
             "intelliSenseMode": "linux-gcc-x64",
             "browse": {
                 "path": [
-                    "${workspaceRoot}",
-                    "/usr/local/include/mosquitto_client"
+                    "${workspaceRoot}"
                   ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
