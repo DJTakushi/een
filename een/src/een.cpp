@@ -18,6 +18,7 @@ een::een(std::string config){
                                                         topic_ndeath_);
   stable_ &= spb_mosq_client_->is_stable();
   local_conn_ = connection_factory::create(kAzureIot);
+  local_conn_->initialize();
   process_local_message_loop_start();
 
   /** TODO : connect to all device modules and poplulate device_map_ */
