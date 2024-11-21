@@ -24,7 +24,7 @@ static std::string time_rfc_3339() {
 int main(int argc, char* argv[]) {
   /** print app version determined from root CMakeLists.txt */
   std::cout  << time_rfc_3339() <<" : ";
-  std::cout << std::string(APP_VERSION) << " starting..." <<  std::endl;
+  std::cout << std::string(EEN_VERSION) << " starting..." <<  std::endl;
   std::shared_ptr<een> een_ = std::make_shared<een>("");
 
   while(een_->is_stable()){

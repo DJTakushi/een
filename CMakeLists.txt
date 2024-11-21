@@ -16,7 +16,7 @@ set(EEN_VERSION
 set(EEN_NAME_VERSION
     "${EEN_PROJECT_NAME} v${EEN_VERSION}")
 
-add_compile_definitions(APP_VERSION="${EEN_NAME_VERSION}")
+add_compile_definitions(EEN_VERSION="${EEN_NAME_VERSION}")
 
 ################################################################################
 ### DECLARE PROJECT
