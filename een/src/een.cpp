@@ -4,18 +4,19 @@
 #include "connection_factory.h"
 een::een(std::string config){
   set_topics();
-  std::list<std::string> subscriptions_ = { topic_ncmd_,
-                                            topic_dcmd_};
   char host[40] = "localhost";
   char* mq_host = std::getenv("MQ_HOST");
   if (mq_host != NULL){
     strcpy(host,mq_host);
   }
-  spb_mosq_client_ = std::make_shared<mosquitto_client>(mq_host,
+  spb_mosq_client_ = std::make_shared<connection_mqtt>(mq_host,
                                                         1883,
-                                                        60,
-                                                        subscriptions_,
-                                                        topic_ndeath_);
+                                                        60);
+  spb_mosq_client_->subscriptions_add(topic_ncmd_);
+  spb_mosq_client_->subscriptions_add(topic_dcmd_);
+  spb_mosq_client_->set_will_topic(topic_ndeath_);
+  spb_mosq_client_->initialize();
+
   stable_ &= spb_mosq_client_->is_stable();
   local_conn_ = connection_factory::create(kAzureIot);
   local_conn_->initialize();
