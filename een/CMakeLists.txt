@@ -19,18 +19,9 @@ target_link_libraries(${PROJECT_NAME}
   mosquitto_client
   libmosquitto.so
   connections
-  libiothub_client.a
-  libiothub_client_mqtt_transport.a
-  libumqtt.a
-  libaziotsharedutil.a
-  libparson.a
-  libprov_auth_client.a
   libcurl.so
   libssl.so
   libcrypto.so
-  libhsm_security_client.a
-  libutpm.a
   libuuid.so
-  libuhttp.a
   attributes
 )
