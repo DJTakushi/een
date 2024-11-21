@@ -15,13 +15,13 @@ target_include_directories(${PROJECT_NAME}  PRIVATE
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 target_link_libraries(${PROJECT_NAME}
-  libtahu.a
-  mosquitto_client
-  libmosquitto.so
+  attributes
   connections
+  mosquitto_client
+  libtahu.a
+  libmosquitto.so
   libcurl.so
   libssl.so
   libcrypto.so
   libuuid.so
-  attributes
 )

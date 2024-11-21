@@ -12,10 +12,10 @@ target_include_directories(${TARGET} PRIVATE
 target_compile_features(${TARGET} PUBLIC cxx_std_17)
 
 target_link_libraries(${TARGET}
+  attributes
+  een
   libcurl.so
   libssl.so
   libcrypto.so
   libuuid.so
-  attributes
-  een
 )
