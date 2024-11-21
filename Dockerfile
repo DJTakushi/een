@@ -90,16 +90,6 @@ WORKDIR /
 RUN git clone https://github.com/nlohmann/json.git --branch v3.11.3
 RUN cp -r /json/include/* /usr/include/
 
-# embedded common
-WORKDIR /
-RUN git clone https://github.com/DJTakushi/embedded_common.git
-RUN mkdir -p /embedded_common/build
-WORKDIR /embedded_common/build
-ARG EMBEDDED_COMMON_CHECKOUT=dcbafb9cd16c64517cf91eac775d55591a79e002
-RUN git fetch -a -p
-RUN git checkout ${EMBEDDED_COMMON_CHECKOUT}
-RUN cmake .. && make install
-
 # een build
 ADD . /een/
 RUN rm -r /een/build/*
