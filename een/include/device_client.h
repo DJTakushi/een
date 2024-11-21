@@ -1,8 +1,9 @@
 #pragma once
 #include <map>
 #include <string>
+#include "device_client_i.h"
 #include "attribute_host.h"
-class device_client {
+class device_client : public device_client_i {
   std::string device_id_;
   std::string group_id_;
   std::string edge_node_id_;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "tahu.h"
 #include "een.h"
+#include "device_client.h"
 #include "connection_factory.h"
 een::een(std::string config){
   set_topics();

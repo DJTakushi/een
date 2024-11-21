@@ -2,9 +2,9 @@
 #include <thread>
 
 #include "connection_mqtt.h"
-#include "device_client.h"
+#include "device_client_i.h"
 #include "connection_i.h"
-typedef std::map<std::string,std::shared_ptr<device_client>> device_map;
+typedef std::map<std::string,std::shared_ptr<device_client_i>> device_map;
 
 class een{
   bool stable_{true}; // will be flagged false if problems detected
