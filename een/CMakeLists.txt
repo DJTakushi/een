@@ -8,7 +8,7 @@ add_library(${PROJECT_NAME} ${SOURCE})
 
 target_include_directories(${PROJECT_NAME}  PRIVATE
   "include"
-  "../attributes/include"
+  "../embedded_common/attributes/include"
   "../embedded_common/connection/include"
 )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
