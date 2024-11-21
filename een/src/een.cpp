@@ -1,4 +1,5 @@
 #include <iostream>
+#include "tahu.h"
 #include "een.h"
 #include "connection_factory.h"
 een::een(std::string config){
