@@ -122,6 +122,6 @@ RUN apk add util-linux-dev
 RUN addgroup -S shs && adduser -S shs -G shs
 USER shs
 
-COPY --chown=shs:shs --from=build /een/build/een/een ./een
+COPY --chown=shs:shs --from=build /een/build/app/app ./app
 
-ENTRYPOINT [ "./een" ]
+ENTRYPOINT [ "./app" ]
