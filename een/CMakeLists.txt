@@ -1,25 +1,21 @@
-################################################################################
-### SparkPlug B Demo Embedded Edge Node
-################################################################################
+cmake_minimum_required(VERSION 3.28.3)
+project(een)
 
-set(TARGET een)
-
-add_executable(${TARGET}
-  main.cpp
-  src/een.cpp
-  src/device_client.cpp
+file(GLOB_RECURSE SOURCE
+  src/*.cpp
 )
+add_library(${PROJECT_NAME} ${SOURCE})
 
-target_include_directories(een PRIVATE
+target_include_directories(${PROJECT_NAME}  PRIVATE
   "."
   "include"
   "../attributes/include"
   "/usr/local/include/mosquitto_client"
-  "/usr/local/include/connections"
+  "../embedded_common/connection/include"
 )
-target_compile_features(${TARGET} PUBLIC cxx_std_17)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-target_link_libraries(${TARGET}
+target_link_libraries(${PROJECT_NAME}
   libtahu.a
   libmosquitto_client.a
   libmosquitto.so

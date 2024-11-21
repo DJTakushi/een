@@ -26,6 +26,7 @@ project(${EEN_PROJECT_NAME})
 
 set(EEN_SRC_DIR ${PROJECT_SOURCE_DIR}/een)
 
+add_subdirectory(app)
 add_subdirectory(een)
 add_subdirectory(attributes)
 # add_subdirectory(iothub_handler)
