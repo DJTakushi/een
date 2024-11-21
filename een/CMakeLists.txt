@@ -7,19 +7,18 @@ file(GLOB_RECURSE SOURCE
 add_library(${PROJECT_NAME} ${SOURCE})
 
 target_include_directories(${PROJECT_NAME}  PRIVATE
-  "."
   "include"
   "../attributes/include"
-  "/usr/local/include/mosquitto_client"
+  "../embedded_common/mosquitto_client/include"
   "../embedded_common/connection/include"
 )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 target_link_libraries(${PROJECT_NAME}
   libtahu.a
-  libmosquitto_client.a
+  mosquitto_client
   libmosquitto.so
-  libconnections.a
+  connections
   libiothub_client.a
   libiothub_client_mqtt_transport.a
   libumqtt.a

@@ -6,7 +6,7 @@ target_include_directories(${TARGET} PRIVATE
   "."
   "../een/include"
   "../attributes/include"
-  "/usr/local/include/mosquitto_client"
+  "../embedded_common/mosquitto_client/include"
   "../embedded_common/connection/include"
 )
 target_compile_features(${TARGET} PUBLIC cxx_std_17)
