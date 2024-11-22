@@ -101,6 +101,7 @@ void een::rec_local_config_msg(std::string& msg){
         std::cout<< "device_client created : "<< name<<std::endl;
       }
       device_map_[name]->update(j);
+      /** TODO : bring payload generation from device_client->attribute_host to here in order to isolate tahu usage to a single place in the code */
       org_eclipse_tahu_protobuf_Payload* payload = device_map_[name]->get_ddata();
       if(payload != NULL){
         size_t buffer_length = 1024;
