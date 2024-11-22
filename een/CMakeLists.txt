@@ -17,9 +17,4 @@ target_link_libraries(${PROJECT_NAME}
   connections
   device_client
   libtahu.a
-  libmosquitto.so
-  libcurl.so
-  libssl.so
-  libcrypto.so
-  libuuid.so
 )
