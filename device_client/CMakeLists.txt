@@ -14,11 +14,4 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 target_link_libraries(${PROJECT_NAME}
   attributes
-  connections
-  libtahu.a
-  libmosquitto.so
-  libcurl.so
-  libssl.so
-  libcrypto.so
-  libuuid.so
 )
