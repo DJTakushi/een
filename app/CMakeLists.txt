@@ -10,8 +10,4 @@ target_compile_features(${TARGET} PUBLIC cxx_std_17)
 
 target_link_libraries(${TARGET}
   een
-  libcurl.so
-  libssl.so
-  libcrypto.so
-  libuuid.so
 )
