@@ -1,7 +1,7 @@
 #include <iostream>
 #include "tahu.h"
 #include "een.h"
-#include "device_client.h"
+#include "device_client_factory.h"
 #include "connection_factory.h"
 een::een(std::string config) : een_i(config) {
   set_topics();
@@ -94,7 +94,8 @@ void een::rec_local_config_msg(std::string& msg){
         // TODO : should we reset config here?
       }
       else{
-        device_map_[name] = std::make_shared<device_client>(group_id_,
+        device_map_[name] = device_client_factory::create_device_client(
+                                                            group_id_,
                                                             edge_node_id_,
                                                             j);
         std::cout<< "device_client created : "<< name<<std::endl;
