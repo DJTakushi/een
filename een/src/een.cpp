@@ -3,7 +3,7 @@
 #include "een.h"
 #include "device_client.h"
 #include "connection_factory.h"
-een::een(std::string config){
+een::een(std::string config) : een_i(config) {
   set_topics();
   char host[40] = "localhost";
   char* mq_host = std::getenv("MQ_HOST");

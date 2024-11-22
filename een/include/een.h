@@ -4,9 +4,10 @@
 #include "connection_mqtt.h"
 #include "device_client_i.h"
 #include "connection_i.h"
+#include "een_i.h"
 typedef std::map<std::string,std::shared_ptr<device_client_i>> device_map;
 
-class een{
+class een : public een_i {
   bool stable_{true}; // will be flagged false if problems detected
   std::string group_id_{"Sparkplug B Devices"};
   std::string edge_node_id_{"C Edge Node 1"};
