@@ -34,9 +34,6 @@ class een{
   std::thread process_local_message_thread_;
   void process_local_message_loop();
 
- public:
-  een(std::string config);
-  ~een();
   void nbirth_send();
   void dbirth_send();
 
@@ -46,7 +43,10 @@ class een{
   void ncmd_rec();
   void dcmd_rec();
   void ndata__send();
+  void process_local_message_loop_start();
+ public:
+  een(std::string config);
+  ~een();
 
   bool is_stable();
-  void process_local_message_loop_start();
 };
