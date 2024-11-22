@@ -1,6 +1,6 @@
 #include <iostream>
 #include <thread>
-#include "een.h"
+#include "een_factory.h"
 
 void exit_application(int signum) {
   std::cout  << "exiting sub application..."<<std::endl;
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
   /** print app version determined from root CMakeLists.txt */
   std::cout  << time_rfc_3339() <<" : ";
   std::cout << std::string(EEN_VERSION) << " starting..." <<  std::endl;
-  std::shared_ptr<een> een_ = std::make_shared<een>("");
+  std::shared_ptr<een_i> een_ = een_factory::create_een("");
 
   while(een_->is_stable()){
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
