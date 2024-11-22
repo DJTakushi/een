@@ -27,5 +27,6 @@ project(${EEN_PROJECT_NAME})
 set(EEN_SRC_DIR ${PROJECT_SOURCE_DIR}/een)
 
 add_subdirectory(app)
+add_subdirectory(device_client)
 add_subdirectory(een)
 add_subdirectory(embedded_common)

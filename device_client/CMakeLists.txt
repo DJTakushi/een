@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28.3)
-project(een)
+project(device_client)
 
 file(GLOB_RECURSE SOURCE
   src/*.cpp
@@ -8,16 +8,13 @@ add_library(${PROJECT_NAME} ${SOURCE})
 
 target_include_directories(${PROJECT_NAME}  PRIVATE
   "include"
-  "../device_client/include"
   "../embedded_common/attributes/include"
-  "../embedded_common/connection/include"
 )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 target_link_libraries(${PROJECT_NAME}
   attributes
   connections
-  device_client
   libtahu.a
   libmosquitto.so
   libcurl.so
