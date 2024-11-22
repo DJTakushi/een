@@ -31,6 +31,7 @@ org_eclipse_tahu_protobuf_Payload* device_client::get_ddata(){
   org_eclipse_tahu_protobuf_Payload* ddata_payload = new org_eclipse_tahu_protobuf_Payload;
   get_next_payload(ddata_payload);
 
+  steady_tp pub_time = std::chrono::steady_clock::now();
   for(auto attr : attribute_host_.get_updated_attributes()){
     size_t attr_size;
     uint64_t tahu_datatype;
@@ -61,6 +62,7 @@ org_eclipse_tahu_protobuf_Payload* device_client::get_ddata(){
                       false,
                       attr->get_value(),
                       attr_size);
+    attr->update_time_published(pub_time);
   }
 
   if(ddata_payload->metrics_count <= 0){
