@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include "een_factory.h"
+#include "argument_helper.h"
 
 void exit_application(int signum) {
   std::cout  << "exiting sub application..."<<std::endl;
@@ -25,7 +26,12 @@ int main(int argc, char* argv[]) {
   /** print app version determined from root CMakeLists.txt */
   std::cout  << time_rfc_3339() <<" : ";
   std::cout << std::string(EEN_VERSION) << " starting..." <<  std::endl;
-  std::shared_ptr<een_i> een_ = een_factory::create_een("");
+
+  connection_type type = argument_helper::get_connection_type(argc,argv);
+  std::string address = argument_helper::get_address(argc, argv);
+  uint port = argument_helper::get_port(argc, argv);
+
+  std::shared_ptr<een_i> een_ = een_factory::create_een("",type,address,port);
 
   while(een_->is_stable()){
     std::this_thread::sleep_for(std::chrono::milliseconds(1));

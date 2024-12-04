@@ -3,7 +3,10 @@
 #include "een.h"
 #include "device_client_factory.h"
 #include "connection_factory.h"
-een::een(std::string config) : een_i(config) {
+een::een(std::string config,
+      connection_type conn_type,
+      std::string address,
+      uint port) : een_i(config) {
   set_topics();
   char host[40] = "localhost";
   char* mq_host = std::getenv("MQ_HOST");
@@ -19,7 +22,7 @@ een::een(std::string config) : een_i(config) {
   spb_mosq_client_->initialize();
 
   stable_ &= spb_mosq_client_->is_stable();
-  local_conn_ = connection_factory::create(kAzureIot);
+  local_conn_ = connection_factory::create(conn_type,address,port);
   local_conn_->initialize();
   process_local_message_loop_start();
 

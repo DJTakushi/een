@@ -4,6 +4,7 @@
 #include "connection_mqtt.h"
 #include "device_client_i.h"
 #include "connection_i.h"
+#include "connection_factory.h"
 #include "een_i.h"
 typedef std::map<std::string,std::shared_ptr<device_client_i>> device_map;
 
@@ -46,7 +47,10 @@ class een : public een_i {
   void ndata__send();
   void process_local_message_loop_start();
  public:
-  een(std::string config);
+  een(std::string config,
+      connection_type conn_type,
+      std::string address,
+      uint port);
   ~een();
 
   bool is_stable();
