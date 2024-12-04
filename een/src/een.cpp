@@ -4,16 +4,12 @@
 #include "device_client_factory.h"
 #include "connection_factory.h"
 een::een(std::string config,
+      std::string spb_address,
       connection_type conn_type,
-      std::string address,
-      uint port) : een_i(config) {
+      std::string local_address,
+      uint local_port) : een_i(config) {
   set_topics();
-  char host[40] = "localhost";
-  char* mq_host = std::getenv("MQ_HOST");
-  if (mq_host != NULL){
-    strcpy(host,mq_host);
-  }
-  spb_mosq_client_ = std::make_shared<connection_mqtt>(mq_host,
+  spb_mosq_client_ = std::make_shared<connection_mqtt>(spb_address.c_str(),
                                                         1883,
                                                         60);
   spb_mosq_client_->subscriptions_add(topic_ncmd_);
@@ -22,7 +18,7 @@ een::een(std::string config,
   spb_mosq_client_->initialize();
 
   stable_ &= spb_mosq_client_->is_stable();
-  local_conn_ = connection_factory::create(conn_type,address,port);
+  local_conn_ = connection_factory::create(conn_type,local_address,local_port);
   local_conn_->initialize();
   process_local_message_loop_start();
 

@@ -27,11 +27,16 @@ int main(int argc, char* argv[]) {
   std::cout  << time_rfc_3339() <<" : ";
   std::cout << std::string(EEN_VERSION) << " starting..." <<  std::endl;
 
+  std::string spb_address = argument_helper::get_spb_address(argc,argv);
   connection_type type = argument_helper::get_connection_type(argc,argv);
-  std::string address = argument_helper::get_address(argc, argv);
-  uint port = argument_helper::get_port(argc, argv);
+  std::string local_address = argument_helper::get_address(argc, argv);
+  uint local_port = argument_helper::get_port(argc, argv);
 
-  std::shared_ptr<een_i> een_ = een_factory::create_een("",type,address,port);
+  std::shared_ptr<een_i> een_ = een_factory::create_een("",
+                                                        spb_address,
+                                                        type,
+                                                        local_address,
+                                                        local_port);
 
   while(een_->is_stable()){
     std::this_thread::sleep_for(std::chrono::milliseconds(1));

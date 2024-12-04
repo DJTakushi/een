@@ -48,9 +48,10 @@ class een : public een_i {
   void process_local_message_loop_start();
  public:
   een(std::string config,
+      std::string spb_address,
       connection_type conn_type,
-      std::string address,
-      uint port);
+      std::string local_address,
+      uint local_port);
   ~een();
 
   bool is_stable();

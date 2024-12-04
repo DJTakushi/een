@@ -2,8 +2,13 @@
 #include "een.h"
 
 std::shared_ptr<een_i> een_factory::create_een(std::string config,
-                                                connection_type conn_type,
-                                                std::string address,
-                                                uint port){
-  return std::make_shared<een>(config, conn_type, address, port);
+                                                std::string spb_address,
+                                                connection_type local_conn_type,
+                                                std::string local_address,
+                                                uint local_port){
+  return std::make_shared<een>(config,
+                                spb_address,
+                                local_conn_type,
+                                local_address,
+                                local_port);
 }
