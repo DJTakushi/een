@@ -31,12 +31,12 @@ RUN  sed -i "s|#define SPARKPLUG_DEBUG 1|//#define SPARKPLUG_DEBUG 1 |g" \
 WORKDIR /
 RUN git clone https://github.com/nanopb/nanopb.git --branch nanopb-0.4.1
 WORKDIR /nanopb/generator
-CMD ["python3"  \
-"nanopb_generator.py", \
-"/tahu/sparkplug_b/sparkplug_b.proto", \
-"-f", \
-"/tahu/sparkplug_b/c/core/tahu.options", \
-"/tahu/sparkplug_b/c/core/src/tahu.pb"]
+CMD ["python3", \
+      "nanopb_generator.py", \
+      "/tahu/sparkplug_b/sparkplug_b.proto", \
+      "-f", \
+      "/tahu/sparkplug_b/c/core/tahu.options", \
+      "/tahu/sparkplug_b/c/core/src/tahu.pb"]
 
 RUN /my_venv/bin/python3 nanopb_generator.py \
     -I /tahu/sparkplug_b/sparkplug_b.proto \
@@ -114,4 +114,4 @@ USER shs
 
 COPY --chown=shs:shs --from=build /een/build/app/app ./app
 
-ENTRYPOINT [ "./app" ]
+ENTRYPOINT [ "./app", "-cMQTT", "-a172.17.0.1" ]
