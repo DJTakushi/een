@@ -19,6 +19,7 @@ een::een(std::string config,
 
   stable_ &= spb_mosq_client_->is_stable();
   local_conn_ = connection_factory::create(conn_type,local_address,local_port);
+  local_conn_->subscriptions_add("een");
   local_conn_->initialize();
   process_local_message_loop_start();
 
