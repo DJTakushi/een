@@ -114,4 +114,4 @@ USER shs
 
 COPY --chown=shs:shs --from=build /een/build/app/app ./app
 
-ENTRYPOINT [ "./app", "-cMQTT", "-a172.17.0.1" ]
+ENTRYPOINT [ "./app", "-cMQTT", "-a172.17.0.1" ,"-spba172.17.0.1"]
