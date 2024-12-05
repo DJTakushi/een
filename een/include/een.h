@@ -28,8 +28,7 @@ class een : public een_i {
 
   bool log_mosquitto_{false};
 
-  void rec_local_data_msg(std::string& msg);
-  void rec_local_config_msg(std::string& msg);
+  void rec_local_msg(std::string& msg);
 
   void set_topics();
   bool is_active_{false};

@@ -63,9 +63,6 @@ void een::dcmd_rec(){
 void een::ndata__send(){
   /** TODO :  */
 }
-void een::rec_local_data_msg(std::string& msg){
-  /** TODO :  */
-}
 void een::process_local_message_loop(){
   while(is_active_){
     std::string msg;
@@ -76,7 +73,7 @@ void een::process_local_message_loop(){
       local_conn_->cv.wait(lk, [this] { return this->local_conn_->message_available(); });
       msg = local_conn_->get_received_message();
     }
-    rec_local_config_msg(msg);
+    rec_local_msg(msg);
   }
 }
 
@@ -87,7 +84,7 @@ void een::process_local_message_loop_start(){
   });
 }
 
-void een::rec_local_config_msg(std::string& msg){
+void een::rec_local_msg(std::string& msg){
   try {
     nlohmann::json j = nlohmann::json::parse(msg);
     if(j.contains("name")){
