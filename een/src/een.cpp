@@ -5,11 +5,11 @@
 #include "connection_factory.h"
 een::een(std::string config,
       std::string spb_address,
-      connection_type conn_type,
+      ec::connection_type conn_type,
       std::string local_address,
       uint local_port) : een_i(config) {
   set_topics();
-  spb_mosq_client_ = std::make_shared<connection_mqtt>(spb_address.c_str(),
+  spb_mosq_client_ = std::make_shared<ec::connection_mqtt>(spb_address.c_str(),
                                                         1883,
                                                         60);
   spb_mosq_client_->subscriptions_add(topic_ncmd_);
@@ -18,7 +18,9 @@ een::een(std::string config,
   spb_mosq_client_->initialize();
 
   stable_ &= spb_mosq_client_->is_stable();
-  local_conn_ = connection_factory::create(conn_type,local_address,local_port);
+  local_conn_ = ec::connection_factory::create(conn_type,
+                                              local_address,
+                                              local_port);
   local_conn_->subscriptions_add("een");
   local_conn_->initialize();
   process_local_message_loop_start();

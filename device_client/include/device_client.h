@@ -7,7 +7,7 @@ class device_client : public device_client_i {
   std::string device_id_;
   std::string group_id_;
   std::string edge_node_id_;
-  attribute_host attribute_host_;
+  ec::attribute_host attribute_host_;
   nlohmann::json config_;
   std::string topic_ddata_;
   void set_topics();

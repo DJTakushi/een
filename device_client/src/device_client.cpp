@@ -36,15 +36,15 @@ org_eclipse_tahu_protobuf_Payload* device_client::get_ddata(){
     size_t attr_size;
     uint64_t tahu_datatype;
     switch (attr->get_datatype()){
-      case kInteger:
+      case ec::kInteger:
         tahu_datatype = METRIC_DATA_TYPE_INT64;
         attr_size = sizeof(uint64_t);
         break;
-      case kDouble:
+      case ec::kDouble:
         tahu_datatype = METRIC_DATA_TYPE_DOUBLE;
         attr_size = sizeof(double);
         break;
-      case kString:
+      case ec::kString:
         tahu_datatype = METRIC_DATA_TYPE_STRING;
         attr_size = sizeof(std::string);
         break;
